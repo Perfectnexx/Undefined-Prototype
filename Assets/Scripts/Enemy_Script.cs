@@ -5,8 +5,8 @@ using UnityEngine;
 public class Enemy_Script : MonoBehaviour {
     public float moveSpeed;
 
-    public float degrees;
-    public float facingDegree;
+    public float fovDegrees;
+    public float startDeg;
     public float distance;
 
     public bool detected;
@@ -20,8 +20,8 @@ public class Enemy_Script : MonoBehaviour {
     void Start() {
         moveSpeed = 3;
 
-        degrees = 90;
-        facingDegree = 0;
+        fovDegrees = 90;
+        startDeg = 0;
         distance = 3f;
 
         detected = false;
@@ -38,23 +38,42 @@ public class Enemy_Script : MonoBehaviour {
         Vector3 playerPos = target.position;
         Vector3 enemyToPlayer = playerPos - enemyPos;
 
-        Debug.Log(Quaternion.FromToRotation(Vector3.right, enemyPos - playerPos).eulerAngles.z);
-
-        Debug.DrawRay(enemyPos, enemyToPlayer.normalized * distance, Color.red);
-        RaycastHit2D hit = Physics2D.Raycast(enemyPos, enemyToPlayer, distance, layerMask);
+        startDeg %= 360;
+        float endDeg = (startDeg + fovDegrees) % 360;
+        float playerDeg = Quaternion.FromToRotation(Vector3.left, enemyPos - playerPos).eulerAngles.z;
+        bool inFov = false;
         
-        if (hit.collider != null) {
-            // Debug.Log(hit.collider.gameObject.name);
-            detected = true;
-        } else {
-            detected = false;
+        if (startDeg < endDeg) { // normal case
+            inFov = startDeg < playerDeg && playerDeg < endDeg;
+        } else { // end wraps around to 0
+            inFov = startDeg < playerDeg || playerDeg < endDeg;
         }
 
-        // move towards the player pos
-        float tilesize = 20f;
-        if (Vector3.Distance(target.position, transform.position) <= 5 * tilesize) {
-            
-            //transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime) ;
+        Debug.DrawRay(
+            enemyPos,
+            enemyToPlayer.normalized * distance,
+            inFov ? Color.green : Color.red
+        );
+
+        Debug.DrawRay(enemyPos, Quaternion.AngleAxis(startDeg, Vector3.forward)*Vector3.right*distance, Color.yellow);
+        Debug.DrawRay(enemyPos, Quaternion.AngleAxis(endDeg, Vector3.forward)*Vector3.right*distance, Color.yellow);
+
+        if (inFov) {
+            RaycastHit2D hit = Physics2D.Raycast(enemyPos, enemyToPlayer, distance, layerMask);
+
+            if (hit.collider != null) {
+                //Debug.Log(hit.collider.gameObject.name);
+                detected = true;
+            } else {
+                detected = false;
+            }
+
+            // move towards the player pos
+            float tilesize = 20f;
+            if (Vector3.Distance(target.position, transform.position) <= 5 * tilesize) {
+
+                //transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime) ;
+            }
         }
     }
 }

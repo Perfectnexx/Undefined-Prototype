@@ -564,7 +564,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -753,10 +753,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  target: {fileID: 1078433403}
-  degrees: 0
-  rays: 0
-  facingDegree: 0
+  fovDegrees: 0
+  startDeg: 0
+  distance: 0
   detected: 0
 --- !u!61 &615483573
 BoxCollider2D:
@@ -1066,10 +1065,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  target: {fileID: 1078433403}
-  degrees: 0
-  rays: 0
-  facingDegree: 0
+  fovDegrees: 0
+  startDeg: 0
+  distance: 0
   detected: 0
 --- !u!212 &874538285
 SpriteRenderer:
@@ -1578,7 +1576,7 @@ GameObject:
   - component: {fileID: 1078433401}
   - component: {fileID: 1078433400}
   - component: {fileID: 1078433399}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player_Prototype
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1713,7 +1711,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1078433398}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.3, y: -9.4, z: -1}
+  m_LocalPosition: {x: 33.03, y: -7.45, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1322685444}
@@ -20024,7 +20022,7 @@ GameObject:
   - component: {fileID: 1322685443}
   - component: {fileID: 1322685442}
   - component: {fileID: 1322685441}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player_Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20191,10 +20189,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  target: {fileID: 1078433403}
-  degrees: 0
-  rays: 0
-  facingDegree: 0
+  fovDegrees: 0
+  startDeg: 0
+  distance: 0
   detected: 0
 --- !u!212 &1329130011
 SpriteRenderer:
@@ -20253,7 +20250,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1329130007}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.3, y: -9.31, z: -1}
+  m_LocalPosition: {x: 28.89, y: -8.15, z: -1}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -20949,7 +20946,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1666107770}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: 'Player Point '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21050,10 +21047,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  target: {fileID: 1078433403}
-  degrees: 0
-  rays: 0
-  facingDegree: 0
+  fovDegrees: 0
+  startDeg: 0
+  distance: 0
   detected: 0
 --- !u!212 &1701096127
 SpriteRenderer:

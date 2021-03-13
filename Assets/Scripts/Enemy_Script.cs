@@ -3,62 +3,51 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy_Script : MonoBehaviour {
-    private Rigidbody2D rb;
-    private Vector2 movement;
     public float moveSpeed;
-    public Transform target;
-    // public bool overlapping;
 
     public float degrees;
-    public int rays;
     public float facingDegree;
+    public float distance;
 
-
-    public bool detected = false;
+    public bool detected;
+    private int layerMask;
 
     private GameObject player;
+    private Transform target;
+
+    
 
     void Start() {
-        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-
-        rb = gameObject.GetComponent<Rigidbody2D>();
         moveSpeed = 3;
 
-        degrees = 1;
-        rays = 1;
+        degrees = 90;
         facingDegree = 0;
+        distance = 3f;
+
+        detected = false;
+        layerMask = (LayerMask.GetMask("Player", "Wall"));
 
         player = GameObject.Find("Player_Prototype");
-        Debug.Log(player.name);
+        target = player.GetComponent<Transform>();
     }
 
     void Update() {
-        // ah yes, broken code
-        //movement = Vector2.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
-        //rb.MovePosition(rb.position + movement);
-
         // raycast!
-        // shoot rays to detect walls or the player, whichever it hits first
-        Vector3 playerPos = player.transform.position;
-        Vector2 enemyToPlayer = playerPos - transform.position;
+        // shoot ray to detect walls or the player, whichever it hits first
+        Vector3 enemyPos = transform.position;
+        Vector3 playerPos = target.position;
+        Vector3 enemyToPlayer = playerPos - enemyPos;
 
-        Debug.DrawRay(transform.position, enemyToPlayer, Color.red);
+        Debug.Log(Quaternion.FromToRotation(Vector3.right, enemyPos - playerPos).eulerAngles.z);
 
-
-        float direction = facingDegree;
-        float raySpacing = degrees / rays;
-        for (int i = 0; i < rays; i++) {
-
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.right);
-            
-
-            if (hit.collider != null) {
-                detected = true;
-            } else {
-                detected = false;
-            }
-
-            direction += raySpacing;
+        Debug.DrawRay(enemyPos, enemyToPlayer.normalized * distance, Color.red);
+        RaycastHit2D hit = Physics2D.Raycast(enemyPos, enemyToPlayer, distance, layerMask);
+        
+        if (hit.collider != null) {
+            // Debug.Log(hit.collider.gameObject.name);
+            detected = true;
+        } else {
+            detected = false;
         }
 
         // move towards the player pos
